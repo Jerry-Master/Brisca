@@ -41,7 +41,7 @@ environment.exe: environment.o $(OBJ)
 m='Auto'
 git_upload:
 	git add -A
-	git commit -m $(m)
+	git commit -m "$(m)"
 	git push
 
 clean:
