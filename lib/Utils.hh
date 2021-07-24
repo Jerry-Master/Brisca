@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <getopt.h>
 #include <string.h>
+#include <time.h> 
 
 #include <iostream>
 #include <iomanip>
@@ -62,18 +63,19 @@ inline int string_to_int (const string& s) {
 
 /* Function to read parameters from input */
 inline void read_args(int argc, char **argv, string& output_file, int& seed, 
-                      bool& human, bool& verbose,
+                      bool& human, bool& human_first, bool& verbose, int& nrounds,
                       string& player1, string& player2){
     int c;
     int option_index = 0;
     static struct option long_options[] = {
         {"output",  required_argument, 0,  'o' },
         {"seed",    required_argument, 0,  's' },
-        {"human",   no_argument,       0,  'h' },
-        {"verbose", no_argument,       0,  'v' }
+        {"human",   optional_argument, 0,  'h' },
+        {"verbose", no_argument,       0,  'v' },
+        {"nrounds", required_argument, 0,  'n' }
     };
-
-    while ((c = getopt_long(argc, argv, "o:s:hv",
+ 
+    while ((c = getopt_long(argc, argv, "o:s:h::vn:",
                 long_options, &option_index)) != -1) {
 
         switch (c) {
@@ -84,8 +86,11 @@ inline void read_args(int argc, char **argv, string& output_file, int& seed,
                     seed = string_to_int(optarg);
                 } else if (string(long_options[option_index].name) == "human"){
                     human = true;
+                    if (optarg) human_first = string(optarg) == "first";
                 } else if (string(long_options[option_index].name) == "verbose"){
                     verbose = true;
+                } else if (string(long_options[option_index].name) == "nrounds"){
+                    nrounds = string_to_int(optarg);
                 }
                 break;
             case 'o':
@@ -96,10 +101,13 @@ inline void read_args(int argc, char **argv, string& output_file, int& seed,
                 break;
             case 'h':
                 human = true;
-                cout << "h" << endl;
+                if (optarg) human_first = string(optarg) == "first";
                 break;
             case 'v':
                 verbose = true;
+                break;
+            case 'n':
+                nrounds = string_to_int(optarg);
                 break;
             case '?':
             cout << "?" << endl;
@@ -113,7 +121,10 @@ inline void read_args(int argc, char **argv, string& output_file, int& seed,
     if (optind < argc) {
         player1 = "Strategy" + string(argv[optind++]);
         if (not human){
+            _my_assert(optind < argc, "Needs one more player.");
             player2 = "Strategy" + string(argv[optind++]);
+        } else {
+            player2 = "StrategyHuman";
         }
         if (optind < argc){
             cout << "These parameters are not needed:";

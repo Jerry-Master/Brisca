@@ -9,8 +9,11 @@ Strategy::Strategy(const Deck& cards_, card muestra_){
     }
 }
 
-void Strategy::show() {
-    show_deck(cards);
+void Strategy::show(ostream& os) {
+    show_deck(cards, os);
+}
+void Strategy::show_pile(ostream& os) {
+    show_deck(pile, os);
 }
 
 /*
@@ -26,4 +29,12 @@ int Strategy::count() {
         points += POINTS[c.value-1];
     }
     return points;
+}
+
+void Strategy::add_to_pile(card c1, card c2){
+    pile.push_back(c1);
+    pile.push_back(c2);
+}
+void Strategy::take_card(card c){
+    cards.push_back(c);
 }

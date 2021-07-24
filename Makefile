@@ -44,5 +44,6 @@ git_upload:
 	git commit -m "$(m)"
 	git push
 
+.PHONY: clean
 clean:
 	rm -rf $(ODIR)/*.o *.exe

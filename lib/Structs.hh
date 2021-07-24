@@ -19,16 +19,16 @@ struct card{
 static const vector<string> PALOS = {"bastos", "espadas", "oros", "copas"};
 static const vector<int> POINTS = {11,0,10,0,0,0,0,0,0,2,3,4};
 
-inline void print_card(card C){
-    cout << C.value << " de " << C.palo << endl;
+inline void print_card(card C, ostream& os=cout){
+    os << C.value << " de " << C.palo << endl;
 }
 
-inline void show_deck(const Deck& deck){
-    cout << "Showing full deck: " << endl;
+inline void show_deck(const Deck& deck, ostream& os=cout){
+    os << "Showing full deck: " << endl;
     string tab(4, ' ');
     for (int i = 0; i < deck.size(); i++){
-        cout << tab;
-        print_card(deck[i]);
+        os << tab;
+        print_card(deck[i], os);
     }
 }
 
@@ -41,13 +41,23 @@ inline bool winner(card card1, card card2, card muestra){
     int is_muestra1 = (card1.palo == muestra.palo);
     int is_muestra2 = (card2.palo == muestra.palo);
 
-    if (is_muestra1 and not is_muestra2){
+    if (is_muestra1 and not is_muestra2)
         return 0;
-    }
-    if (not is_muestra1 and is_muestra2){
+    if (not is_muestra1 and is_muestra2)
         return 1;
+    if (is_muestra1 and is_muestra1){
+        if (value1 == 0 and value2 == 0)
+            return card1.value < card2.value;
+        return value1 < value2;
     }
-    return value1 < value2;
+    else if (card1.palo == card2.palo){
+        if (value1 == 0 and value2 == 0)
+            return card1.value < card2.value;
+        return value1 < value2;
+    }
+    else
+        return 0;
+        
 }
 
 #endif

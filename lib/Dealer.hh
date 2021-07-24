@@ -6,7 +6,7 @@ class Dealer{
         Deck deck;
         card muestra;
     public:
-        Dealer(int seed);
+        Dealer();
         Deck starter_cards();
         card give_card();
         int remaining_cards();

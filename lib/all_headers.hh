@@ -4,6 +4,8 @@
 #include "Registry.hh"
 #include "Strategy.hh"
 #include "StrategyDummy.hh"
+#include "StrategyGreedy.hh"
+#include "StrategyHuman.hh"
 #include "Structs.hh"
 #include "Utils.hh"
 #endif

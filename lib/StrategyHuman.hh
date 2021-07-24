@@ -1,7 +1,7 @@
 #pragma once
 #include "Strategy.hh"
 
-#define STRATEGY_NAME StrategyDummy
+#define STRATEGY_NAME StrategyHuman
 class STRATEGY_NAME: public Strategy{
 
     public:

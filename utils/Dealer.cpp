@@ -4,7 +4,7 @@ int randomfunc(int j){
     return rand() % j;
 }
 
-Dealer::Dealer(int seed) {
+Dealer::Dealer() {
     for (const string& palo : PALOS){
         for (int i = 1; i <= 7; i++){
             deck.push_back(card(palo, i));
@@ -13,7 +13,6 @@ Dealer::Dealer(int seed) {
             deck.push_back(card(palo, i));
         }
     }
-    srand(seed);
     random_shuffle(deck.begin(), deck.end(), randomfunc);
 }
 
