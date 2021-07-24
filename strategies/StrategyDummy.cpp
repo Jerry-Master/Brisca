@@ -6,5 +6,4 @@ Strategy* STRATEGY_NAME::factory (const Deck& cards_) {
 
 void STRATEGY_NAME::play() {
     cout << _stringify(STRATEGY_NAME) << endl;
-    show_deck(cards);
 }

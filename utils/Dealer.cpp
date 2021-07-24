@@ -31,12 +31,7 @@ Deck Dealer::starter_cards(){
     deck.pop_back();
 
     give1.insert(--give1.end(), give2.begin(), give2.end());
-    for (int i = 0; i < 6; i++){
-        _my_assert(give1[i].palo.size()>0, "Void palo.(dealer)");
-
-    }
     _my_assert(give1.size()==6, "Must have 6 cards.");
-    show_deck(Deck(&give1[0], &give1[0]+6));
     return give1;
 }
 
@@ -49,4 +44,8 @@ card Dealer::give_card(){
 
 int Dealer::remaining_cards(){
     return deck.size();
+}
+
+card Dealer::show_muestra(){
+    return muestra;
 }

@@ -17,9 +17,9 @@ class Strategy;
  */
 class Registry {
     public:
-        typedef Strategy* (*Factory)(card*);
+        typedef Strategy* (*Factory)(const Deck&, card);
         static int Register (const char* name, Factory fact);
-        static Strategy* new_strategy (string name, card* cards);
+        static Strategy* new_strategy (string name, const Deck& cards, card muestra);
         static void print_strategies (ostream& os);
 };
 
