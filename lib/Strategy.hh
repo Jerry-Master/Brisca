@@ -13,6 +13,7 @@ class Strategy{
             It will be overwritten, thus virtual
         */
         virtual card play (card card_ = card()){return card_;};
+        virtual void update (card first = card(), card second = card()){};
 
         /* Shows the cards in console */
         void show(ostream& os);

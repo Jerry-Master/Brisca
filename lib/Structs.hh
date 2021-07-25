@@ -17,7 +17,7 @@ struct card{
 
 #define Deck vector<card>
 static const vector<string> PALOS = {"bastos", "espadas", "oros", "copas"};
-static const vector<int> POINTS = {11,0,10,0,0,0,0,0,0,2,3,4};
+static const vector<int> POINTS = {-1,11,0,10,0,0,0,0,0,0,2,3,4};
 
 inline void print_card(card C, ostream& os=cout){
     os << C.value << " de " << C.palo << endl;
@@ -32,11 +32,26 @@ inline void show_deck(const Deck& deck, ostream& os=cout){
     }
 }
 
+inline void print_card_json(card C, ostream& os=cout){
+    json j;
+    j["palo"] = C.palo;
+    j["value"] = C.value;
+    os << j;
+}
+
+inline void print_deck_json(const Deck& deck, ostream& os=cout){
+    json j;
+    for (int i = 0; i < deck.size(); i++){
+        j[int_to_string(i)] = {{"palo", deck[i].palo}, {"value", deck[i].value}};
+    }
+    os << j;
+}
+
 // Returns 0 if the first player wins and 1 otherwise 
 // In case of tie, first player wins
 inline bool winner(card card1, card card2, card muestra){
-    int value1 = POINTS[card1.value-1];
-    int value2 = POINTS[card2.value-1];
+    int value1 = POINTS[card1.value];
+    int value2 = POINTS[card2.value];
 
     int is_muestra1 = (card1.palo == muestra.palo);
     int is_muestra2 = (card2.palo == muestra.palo);

@@ -31,7 +31,7 @@ void one_round(ofstream& f, Dealer& D, vector<Strategy*>& players, bool& current
     }
     card second = players[not current_player]->play(first);
     if (human){
-        cout << "Second player " << players[current_player]->name() << " plays: ";
+        cout << "Second player " << players[not current_player]->name() << " plays: ";
         print_card(second);
     } if (verbose){
         f << "Second player " << players[not current_player]->name() << " plays: ";
@@ -42,6 +42,9 @@ void one_round(ofstream& f, Dealer& D, vector<Strategy*>& players, bool& current
     if (change_curr_player) current_player = not current_player;
 
     players[current_player]->add_to_pile(first, second);
+
+    players[current_player]->update(first, second);
+    players[not current_player]->update(first, second);
 
     if (take){
         players[current_player]->take_card(D.give_card());
@@ -68,6 +71,7 @@ int one_game(ofstream& f, bool result=true){
     vector<Strategy*> players;
     players.push_back(Registry::new_strategy(pl1, Deck(&start[0], &start[3]), muestra));
     players.push_back(Registry::new_strategy(pl2, Deck(&start[3], &start[3]+3), muestra));
+    
     if (human_first) swap(players[0], players[1]); 
 
     bool current_player = 0;
@@ -87,13 +91,16 @@ int one_game(ofstream& f, bool result=true){
     int points2 = players[1]->count();
     _my_assert((points1+points2)==120, "Total must sum up to 120.");
     if (points1 > points2){
-        if (result) cout << "First player " << players[0]->name() << " won: " << pl1 << endl;
+        if (result) cout << "First player " <<  " won: " << pl1 << endl;
+        if (verbose) f << "First player " <<  " won: " << pl1 << endl;
         return -1;
     } else if (points1 < points2) {
-        if (result) cout << "Second player " << players[1]->name() << " won: " << pl2 << endl;
+        if (result) cout << "Second player " <<  " won: " << pl2 << endl;
+        if (verbose) f << "Second player " <<  " won: " << pl2 << endl;
         return 1;
     } else {
         if (result) cout << "Tie" << endl;
+        if (verbose) f << "Tie" << endl;
         return 0;
     }
 }
@@ -101,7 +108,8 @@ int one_game(ofstream& f, bool result=true){
 int main(int argc, char **argv) {  
     read_args(argc, argv, output_file, seed, human, human_first, verbose, nrounds, pl1, pl2);  
     srand(seed);
-    ofstream f(output_file);
+    ofstream f;
+    if (verbose) f.open(output_file);
 
     if (nrounds == 0 or human){
         one_game(f);
@@ -114,13 +122,17 @@ int main(int argc, char **argv) {
                 f << "Game: " << i << endl;
             }
             int res = one_game(f,false);
-            if (res == 1) wins1++;
-            else if (res == -1) wins2++;
+            if (res == -1) wins1++;
+            else if (res == 1) wins2++;
             else ties++;
+            if (verbose) f << endl;
         }
-        cout << "Player1 won: " << wins1 << " games." << endl;
-        cout << "Player2 won: " << wins2 << " games." << endl;
-        cout << "Number of ties: " << ties << endl;
+        cout << "Player1(" << pl1 << ") won: " << wins1 << " games. Winrate: " 
+             << double(wins1) / (wins1 + wins2 + ties) * 100 << "%" << endl;
+        cout << "Player2(" << pl2 << ") won: " << wins2 << " games. Winrate: " 
+             << double(wins2) / (wins1 + wins2 + ties) * 100 << "%" << endl;
+        cout << "Number of ties: " << ties << ". Tierate: " 
+             << double(ties) / (wins1 + wins2 + ties) * 100 << "%" << endl;
     }
-    f.close();
+    if (verbose) f.close();
 }

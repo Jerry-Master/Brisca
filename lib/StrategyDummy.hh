@@ -14,6 +14,7 @@ class STRATEGY_NAME: public Strategy{
 
         /* Play: returns the move in the next turn */
         card play(card card_ = card());
+        void update (card first = card(), card second = card()){};
 
         /* Returns name */
         string name();

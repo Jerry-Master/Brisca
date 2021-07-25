@@ -20,16 +20,16 @@ EXTRA_OBJ:=$(patsubst $(CDIR)/%.cpp,$(ODIR)/%.o,$(EXTRA_CFILES))
 OBJ += $(EXTRA_OBJ)
 
 
-all: create_header environment.exe
+all: environment.exe
 
 create_header:
 	chmod +x create_headers.sh
 	bash create_headers.sh
 
-$(ODIR)/%.o: $(UDIR)/%.cpp $(DEPS)
+$(ODIR)/%.o: $(UDIR)/%.cpp $(IDIR)/%.hh
 	$(CXX) -c -o $@ $< $(CFLAGS) 
 
-$(ODIR)/%.o: $(CDIR)/%.cpp $(DEPS)
+$(ODIR)/%.o: $(CDIR)/%.cpp $(IDIR)/%.hh
 	$(CXX) -c -o $@ $< $(CFLAGS) 
 
 environment.o: environment.cpp $(OBJ)

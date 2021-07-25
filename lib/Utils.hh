@@ -3,9 +3,12 @@
 
 #include <cassert>
 #include <cstdlib>
+#include <stdlib.h>   
 #include <getopt.h>
 #include <string.h>
 #include <time.h> 
+#include "json.hh"
+using json = nlohmann::json;
 
 #include <iostream>
 #include <iomanip>
@@ -94,7 +97,7 @@ inline void read_args(int argc, char **argv, string& output_file, int& seed,
                 }
                 break;
             case 'o':
-                output_file = optarg;
+                output_file = optarg; 
                 break;
             case 's':
                 seed = string_to_int(optarg);

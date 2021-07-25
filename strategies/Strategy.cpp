@@ -26,7 +26,7 @@ int Strategy::count() {
     for (card c : pile){
         _my_assert(c.value <= 12, "Too high of a value.");
         _my_assert(c.value >= 1, "Too low of a value.");
-        points += POINTS[c.value-1];
+        points += POINTS[c.value];
     }
     return points;
 }
