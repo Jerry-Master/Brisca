@@ -4,7 +4,7 @@ This program simulates several brisca games and tells which strategy is the best
 
 ## Compilation
 
-Simply enter the directory in the terminal and do ```make```. If you haven't clone the repository the instructions will be
+Simply enter the directory in the terminal and do ```make```. If you haven't cloned the repository the instructions will be
 ```
 git clone https://github.com/Jerry-Master/Brisca.git
 cd Brisca
