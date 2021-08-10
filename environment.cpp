@@ -7,8 +7,8 @@ int seed = time(NULL);
 bool human = false;
 bool human_first = false;
 bool verbose = false;
-int nrounds = 0;
-string pl1, pl2;
+int nrounds = 1;
+string pl1, pl2; 
 
 void one_round(ofstream& f, Dealer& D, vector<Strategy*>& players, bool& current_player, 
                card muestra, bool take=true){

@@ -20,7 +20,11 @@ EXTRA_OBJ:=$(patsubst $(CDIR)/%.cpp,$(ODIR)/%.o,$(EXTRA_CFILES))
 OBJ += $(EXTRA_OBJ)
 
 
-all: environment.exe
+all: create_dir environment.exe
+
+create_dir:
+	chmod +x create_dir.sh
+	bash create_dir.sh
 
 create_header:
 	chmod +x create_headers.sh
