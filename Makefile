@@ -36,10 +36,10 @@ $(ODIR)/%.o: $(UDIR)/%.cpp $(IDIR)/%.hh
 $(ODIR)/%.o: $(CDIR)/%.cpp $(IDIR)/%.hh
 	$(CXX) -c -o $@ $< $(CFLAGS) 
 
-environment.o: environment.cpp $(OBJ)
+$(ODIR)/environment.o: environment.cpp $(OBJ)
 	$(CXX) -c -o $@ $< $(CFLAGS) 
 
-environment.exe: environment.o $(OBJ)
+environment.exe: $(ODIR)/environment.o $(OBJ)
 	$(CXX) $(CFLAGS) $^ -o $@
 
 m='Auto'
